@@ -21,7 +21,7 @@ case "$method" in
 	for ((i=1;i<=${#lines[@]};i++))
 	do
         #httpscode=$(curl -sL https://"${lines[$i]}" -o /dev/null -w "https response code: %{response_code}")
-        httpcode=$(curl -sL http://"${lines[$i]}" -o /dev/null -w "code: %{response_code}")
+        httpcode=$(curl -sL http://"${lines[$i]}" -o /dev/null -w "%{response_code}")
         #http=$(curl -sL http://"${lines[$i]}" | grep title > /dev/null )
        # https=$(curl -sL https://"${lines[$i]}" | grep title > /dev/null )
         
@@ -54,7 +54,7 @@ case "$method" in
 	
 	for ((i=1;i<=${#lines[@]};i++))
 	do
-        httpscode=$(curl -sL https://"${lines[$i]}" -o /dev/null -w "code: %{response_code}")
+        httpscode=$(curl -sL https://"${lines[$i]}" -o /dev/null -w "%{response_code}")
 #        https=$(curl -sL https://"${lines[$i]}" | grep title > /dev/null )
         
         if curl -sL https://"${lines[$i]}" | grep class > /dev/null 
@@ -71,7 +71,7 @@ case "$method" in
 ###############################################3#####################################################
     3)
 	read -p "input domain: " domain
-        httpcode=$(curl -sL "$domain" -o /dev/null -w "code: %{response_code}")
+        httpcode=$(curl -sL "$domain" -o /dev/null -w "%{response_code}")
 
 	if curl -Ls --negotiate "$domain" | grep class > /dev/null
         then
