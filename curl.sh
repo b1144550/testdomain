@@ -16,14 +16,10 @@ function read_list(){
 	done < $file
 }
 
-
-
-case "$method" in
-	1)
-	read_list
+function test(){
 	for ((i=1;i<=${#lines[@]};i++))
 	do
-        httpcode=$(curl -sL http://"${lines[$i]}" -o /dev/null -w "%{response_code}")        
+        httpcode=$(curl -sL $protocol://"${lines[$i]}" -o /dev/null -w "%{response_code}")        
         if  curl -sL http://"${lines[$i]}" | grep class > /dev/null  
         then
             echo -e "\033[30;48;5;82m ${lines[$i]} \033[0m" ,"$httpcode"
@@ -31,21 +27,20 @@ case "$method" in
             echo -e "\033[5m\033[30;48;5;196m ${lines[$i]} \033[0m " ,"$httpcode"
         fi
 	done
+}
+
+case "$method" in
+	1)
+	read_list
+	protocol=http
+	test
 	;;
 ###################################2###################################################################
 
 	2)
 	read_list
-	for ((i=1;i<=${#lines[@]};i++))
-	do
-        httpscode=$(curl -sL https://"${lines[$i]}" -o /dev/null -w "%{response_code}")        
-        if curl -sL https://"${lines[$i]}" | grep class > /dev/null 
-        then
-            echo -e "\033[30;48;5;82m ${lines[$i]} \033[0m", "$httpscode"
-        else
-            echo -e "\033[5m\033[30;48;5;196m ${lines[$i]} \033[0m", "$httpscode"
-        fi
-	done
+	protocol=https
+	test
 	;;
 ###############################################3#####################################################
     3)
