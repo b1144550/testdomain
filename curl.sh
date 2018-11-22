@@ -14,9 +14,7 @@ function read_list(){
 		lines[$seq]=$line
 		((seq++))
 	done < $file
-}
 
-function test(){
 	for ((i=1;i<=${#lines[@]};i++))
 	do
         httpcode=$(curl -sL $protocol://"${lines[$i]}" -o /dev/null -w "%{response_code}")        
@@ -31,16 +29,14 @@ function test(){
 
 case "$method" in
 	1)
-	read_list
 	protocol=http
-	test
+	read_list
 	;;
 ###################################2###################################################################
 
 	2)
-	read_list
 	protocol=https
-	test
+	read_list
 	;;
 ###############################################3#####################################################
     3)
